@@ -33,6 +33,11 @@ class Packet:
     def queue_time(self):
         if self.drop:
             return 0
+        return self.process_start_time - self.arrival_time
+
+    def system_time(self):
+        if self.drop:
+            return 0
         return self.process_end_time - self.arrival_time
 
 

@@ -1,9 +1,11 @@
-from simulator import *
-from queue import *
+from src.packet import PacketGenerator
+from src.queue import FIFO
+from src.router import Router
+from src.simulator import Simulator
 
 X = 10  # 10 packets per second
 Y = 0.2  # router processor rate
-T = 2  # 60 seconds for simulation time
+T = 2  # 2 seconds for simulation time
 
 LENGTH_LIMIT = 2
 PROCESSORS_NUM = 2
