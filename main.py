@@ -39,3 +39,12 @@ def get_dropped_packets_count(packets_list):
     for packet in packets_list:
         if packet.drop:
             dropped_count = dropped_count + 1
+
+
+def get_all_queue_Avg(packets_list):
+    queue_times = [packet.queue_time() for packet in packets_list]
+    return float(sum(queue_times) / len(queue_times))
+
+
+
+
