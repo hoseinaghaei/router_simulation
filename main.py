@@ -1,5 +1,5 @@
 from src.packet import PacketGenerator
-from src.queue import FIFO
+from src.queue import FIFO, WRR
 from src.router import Router
 from src.simulator import Simulator
 
@@ -46,9 +46,22 @@ def get_all_queue_Avg(packets_list):
     return float(sum(queue_times) / len(queue_times))
 
 
-def get_each_queue_Avg(packets_list, number_of_queues):
-    queue_time_by_index_dict = dict()
-    for x in range(0, number_of_queues):
-        queue_time_by_index_dict[x] = []
+def get_each_queue_Avg(packets_list, queue_simulation):
+    if isinstance(queue_simulation, WRR):
+        high_list = []
+        medium_list = []
+        low_list = []
+        for packet in packets_list:
+            if packet.priority() == 1:
+                high_list.append(packet.queue_time())
+            elif packet.priority() == 2:
+                medium_list.append(packet.queue_time())
+            else:
+                low_list.append(packet.queue_time())
+        high_avg = sum(high_list) / len(high_list)
+        medium_avg = sum(medium_list) / len(medium_list)
+        low_avg = sum(low_list) / len(low_list)
+        return high_avg, medium_avg, low_avg
 
-    
+    else:
+        return get_all_queue_Avg(packets_list)
