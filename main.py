@@ -65,3 +65,8 @@ def get_each_queue_Avg(packets_list, queue_simulation):
 
     else:
         return get_all_queue_Avg(packets_list)
+
+
+def get_queue_length_avg(total_time, packets_list):
+    packets_list.sort(key=lambda x: x.arrival_time)
+    pass
