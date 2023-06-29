@@ -32,3 +32,10 @@ for i in packets:
 
     print(i.arrival_time, "     ", i.drop, "         ", i.processor_index, "    ", i.process_start_time, "      ",
           i.process_end_time, "     ", max1, "      ", max2)
+
+
+def get_dropped_packets_count(packets_list):
+    dropped_count = 0
+    for packet in packets_list:
+        if packet.drop:
+            dropped_count = dropped_count + 1
