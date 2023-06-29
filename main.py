@@ -46,5 +46,9 @@ def get_all_queue_Avg(packets_list):
     return float(sum(queue_times) / len(queue_times))
 
 
+def get_each_queue_Avg(packets_list, number_of_queues):
+    queue_time_by_index_dict = dict()
+    for x in range(0, number_of_queues):
+        queue_time_by_index_dict[x] = []
 
-
+    
