@@ -1,4 +1,4 @@
-from router import *
+from src.router import *
 
 
 class TriggerObject:

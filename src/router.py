@@ -1,5 +1,8 @@
-from packet import *
-from queue import RouterQueue
+from src.packet import *
+from src.queue import RouterQueue
+
+
+#from queue import RouterQueue
 
 
 class Processor:

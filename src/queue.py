@@ -1,4 +1,5 @@
-from packet import Packet
+#from packet import Packet
+from src.packet import Packet
 
 
 class RouterQueue:
