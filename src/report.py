@@ -61,6 +61,7 @@ def get_dropped_packets_count(packets_list):
     for packet in packets_list:
         if packet.drop:
             dropped_count = dropped_count + 1
+    return  dropped_count
 
 
 def get_all_queue_Avg(packets_list):
@@ -92,3 +93,9 @@ def get_each_queue_Avg(packets_list, queue_simulation):
 def get_queue_length_avg(packets_list, total_time):
     queue_length_calculator = QueueLengthReporter(packets_list, total_time)
     return queue_length_calculator.calculate_queue_length_avg()
+
+
+def get_processors_utilization(router, total_time):
+    processors_work_time_dict = router.get_all_processors_work_time()
+    for index, work_time in processors_work_time_dict.items():
+        print(str("processor number " + str(index) + " server utilization  " + str(float(work_time/total_time))))

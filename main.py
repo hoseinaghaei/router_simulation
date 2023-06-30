@@ -1,7 +1,7 @@
 from src.packet import PacketGenerator
 from src.queue import FIFO, WRR
 from src.report import QueueLengthReporter, get_queue_length_avg, get_all_queue_Avg, get_each_queue_Avg, \
-    get_dropped_packets_count
+    get_dropped_packets_count, get_processors_utilization
 from src.router import Router
 from src.simulator import Simulator
 
@@ -38,5 +38,5 @@ for i in packets:
 print("average length of queue " + str(get_queue_length_avg(packets, T)))
 print(str("average of all queues  ") + str(get_all_queue_Avg(packets)))
 print(str("average of each queues  ") + str(get_each_queue_Avg(packets, queue)))
-print(str("average server utilization ") + str())
+get_processors_utilization(router, T)
 print(str("the count of dropped packets " + str(get_dropped_packets_count(packets))))
