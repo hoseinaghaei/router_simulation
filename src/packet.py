@@ -31,7 +31,7 @@ class Packet:
         return self._priority.value
 
     def queue_time(self):
-        if self.drop:
+        if self.drop or self.process_start_time is None or self.arrival_time is None:
             return 0
         return self.process_start_time - self.arrival_time
 

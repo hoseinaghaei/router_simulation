@@ -1,4 +1,6 @@
 from src.queue import WRR
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 class QueueEvent:
@@ -16,8 +18,9 @@ class QueueLengthReporter:
     def __create_queue_event_list(self):
         event_list = list()
         for packet in self.packet_list:
-            event_list.append(QueueEvent(packet.arrival_time, True))
-            if not packet.drop:
+            if packet.arrival_time is not None:
+                event_list.append(QueueEvent(packet.arrival_time, True))
+            if packet.process_start_time is not None:
                 event_list.append(QueueEvent(packet.process_start_time, False))
         event_list.sort(key=lambda x: x.time)
         return event_list
@@ -61,7 +64,7 @@ def get_dropped_packets_count(packets_list):
     for packet in packets_list:
         if packet.drop:
             dropped_count = dropped_count + 1
-    return  dropped_count
+    return dropped_count
 
 
 def get_all_queue_Avg(packets_list):
@@ -81,9 +84,15 @@ def get_each_queue_Avg(packets_list, queue_simulation):
                 medium_list.append(packet.queue_time())
             else:
                 low_list.append(packet.queue_time())
-        high_avg = sum(high_list) / len(high_list)
-        medium_avg = sum(medium_list) / len(medium_list)
-        low_avg = sum(low_list) / len(low_list)
+        high_avg = 0
+        medium_avg = 0
+        low_avg = 0
+        if len(high_list) != 0:
+            high_avg = float(sum(high_list) / len(high_list))
+        if len(medium_list) != 0:
+            medium_avg = float(sum(medium_list) / len(medium_list))
+        if len(low_list) != 0:
+            low_avg = float(sum(low_list) / len(low_list))
         return high_avg, medium_avg, low_avg
 
     else:
@@ -98,4 +107,21 @@ def get_queue_length_avg(packets_list, total_time):
 def get_processors_utilization(router, total_time):
     processors_work_time_dict = router.get_all_processors_work_time()
     for index, work_time in processors_work_time_dict.items():
-        print(str("processor number " + str(index) + " server utilization  " + str(float(work_time/total_time))))
+        print(str("processor number " + str(index) + " server utilization  " + str(float(work_time / total_time))))
+
+
+def show_high_packets_CDF(packet_list):
+    high_packets_time = []
+    for packet in packet_list:
+        if packet.priority() == 1:
+            high_packets_time.append(packet.queue_time())
+
+    high_packets_time = np.sort(high_packets_time)
+    cdf = np.arange(1, len(high_packets_time) + 1) / len(high_packets_time)
+
+    plt.plot(high_packets_time, cdf, marker='.', linestyle='none')
+    plt.xlabel('Data')
+    plt.ylabel('Cumulative Probability')
+    plt.title('Cumulative Distribution Function (CDF)')
+    plt.grid(True)
+    plt.show()
