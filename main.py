@@ -47,7 +47,7 @@ def simulate_and_report(queue_simulation):
 fifo_queue = FIFO(length_limit=LENGTH_LIMIT)
 simulate_and_report(fifo_queue)
 
-wrr_queue = WRR(length_limit=LENGTH_LIMIT, queue_count=3, queue_weights=[2, 3, 5])
+wrr_queue = WRR(length_limit=LENGTH_LIMIT, queue_count=3, queue_weights=[5, 3, 2])
 simulate_and_report(wrr_queue)
 
 nssp_queue = NPPS(length_limit=LENGTH_LIMIT)
