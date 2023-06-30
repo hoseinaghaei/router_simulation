@@ -2,7 +2,7 @@ from src.packet import *
 from src.queue import RouterQueue
 
 
-#from queue import RouterQueue
+# from queue import RouterQueue
 
 
 class Processor:
@@ -12,6 +12,7 @@ class Processor:
         self.end = None
         self._rate = rate
         self.index = index
+        self.total_work_time = 0
 
     def process(self, packet: Packet, time: float):
         self.packet = packet
@@ -20,6 +21,7 @@ class Processor:
         packet.process_start_time = self.start
         packet.process_end_time = self.end
         packet.processor_index = self.index
+        self.total_work_time = self.total_work_time + (self.end - self.start)
 
 
 class Router:
@@ -27,6 +29,12 @@ class Router:
         self._processor_count = processor_count
         self.processors = [Processor(rate=rate, index=i + 1) for i in range(processor_count)]
         self.queue = queue
+
+    def get_all_processors_work_time(self):
+        processor_work_time_dict = dict()
+        for i in range(len(self.processors)):
+            processor_work_time_dict[i] = self.processors[i].total_work_time
+        return processor_work_time_dict
 
     def _idle_processor_index(self, time: float):
         for i, processor in enumerate(self.processors):
@@ -72,4 +80,3 @@ class Router:
         else:
             processors_end_time = [processor.end for processor in self.processors]
             # print(processors_end_time)
-
