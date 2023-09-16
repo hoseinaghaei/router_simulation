@@ -38,14 +38,57 @@ This file defines the core packet processing logic and packet characteristics wi
 
 - **PacketGenerator Class**: This class generates packets for simulation based on the simulation time and incoming packet rate. It creates a list of packets to be processed during the simulation.
 
-## Getting Started
+### 2. `src/queue.py`
 
-To start using the router simulation script, follow these steps:
+In this file, we implement three types of queues that extend from the base `RouterQueue` class. The base class contains two essential functions: `add_packet` and `pop_packet`, each of which must be implemented for its specific queue type.
 
-1. **Clone the Repository**:
+#### a. FIFO Queue (First-In-First-Out)
 
-   ```bash
-   git clone https://github.com/hoseinaghaei/router_simulation.git
+- `add_packet`: In the FIFO queue, if the queue is full, the packet is dropped; otherwise, it is appended to the end of the list.
+- `pop_packet`: This function pops the front packet from the queue if there is any.
+
+#### b. WRR Queue (Weighted Round Robin)
+
+For the WRR queue, you must add a new parameter named `queue_weights`, which represents the weight of each queue. Typically, there are three queues for each priority level. This [link](https://www.educative.io/answers/what-is-the-weighted-round-robin-load-balancing-technique) provides more details on the Weighted Round Robin technique.
+
+- `add_packet`: Similar to the FIFO queue, packets are added to the queue with a priority equal to the packet's priority.
+
+- `pop_packet`: In the WRR queue, we pop packets from the higher priority queue if it has remaining weight. If the higher priority queue is empty or has no remaining weight, we pop packets from the next queue.
+
+#### c. NPPS Queue (Non-Preemptive Priority Scheduling)
+
+Non-Preemptive Priority Scheduling is another queue type implemented in this simulation. If you are unfamiliar with this type of queue, you can refer to this [link](https://www.javatpoint.com/os-non-preemptive-priority-scheduling) for more information.
+
+- `add_packet`: In the NPPS queue, packets are inserted at the first place that has a lower priority. If the chosen queue is full, the packet with the lowest priority in that queue is dropped.
+
+- `pop_packet`: Non-Preemptive Priority Scheduling simply pops the last element from the queue.
+
+Each queue type (`FIFO`, `WRR`, and `NPPS`) has its own specific implementation of the `add_packet` and `pop_packet` functions, tailored to its respective behavior and policies.
+
+## Implementation Details
+
+Describe any important implementation details, additional features, or dependencies that are crucial for understanding and using your project.
+
+## Usage
+
+To use the queue types in your router simulation, you can select the appropriate queue type in your simulation code and utilize the corresponding `add_packet` and `pop_packet` functions.
+
+## Contributing
+
+Contributions to enhance or extend the functionality of the router simulation and its queue types are welcome. Feel free to make improvements or add new features. Follow the standard GitHub Fork and Pull Request workflow for contributions.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE). You are free to use, modify, and distribute the code as per the terms of this license.
+
+## Contact
+
+If you have any questions, need assistance, or have suggestions related to the router simulation or its queue types, please feel free to reach out to the repository owner:
+
+[Your Name](https://github.com/your-username)
+
+Thank you for your interest in the router simulation project, and we hope this
+
 
 
 1) برای افزایش بهره وری سیستم میتوان پردازنده جدید اضافه کرد و یا از زمانبندی های متنوع دیگر مانند class based queueing و ... استفاده کرد.
