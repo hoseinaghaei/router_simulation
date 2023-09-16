@@ -105,7 +105,7 @@ As mentioned earlier, the router has `PROCESSORS_NUM` processors. We've defined 
 
 - This function checks for idle processors and waiting packets. If both are available, it pops a packet from the queue and starts processing it.
 - 
-### Clone and Run
+## Clone and Run
 
 To see the simulation results, follow these steps:
 
