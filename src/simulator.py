@@ -24,7 +24,6 @@ class Simulator:
         self._arrival_packet_triggers = [TriggerObject(arrival_not_leave=True, packet=i) for i in packets]
         self._leaving_packet_triggers = []
         self._arrival_index = 0
-        self._leave_index = 0
         self._time = 0.0
 
     def simulate(self):
