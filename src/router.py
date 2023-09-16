@@ -2,9 +2,6 @@ from src.packet import *
 from src.queue import RouterQueue
 
 
-# from queue import RouterQueue
-
-
 class Processor:
     def __init__(self, rate: float, index: int):
         self.packet = None
@@ -71,12 +68,8 @@ class Router:
 
     def pick_from_queue(self, time: float) -> Packet | None:
         idle_processor_index = self._idle_processor_index(time=time)
-        # print("pick_from_queue : ", time, " packet: ", idle_processor_index)
         if idle_processor_index != -1:
             packet_to_process = self.queue.pop_packet()
             if packet_to_process is not None:
                 self.processors[idle_processor_index].process(packet=packet_to_process, time=time)
                 return packet_to_process
-        else:
-            processors_end_time = [processor.end for processor in self.processors]
-            # print(processors_end_time)
