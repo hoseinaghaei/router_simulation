@@ -93,18 +93,12 @@ The `_next_trigger` function plays a crucial role by selecting the trigger that 
 
 As mentioned earlier, the router has `PROCESSORS_NUM` processors. We've defined a `Processor` class for processing incoming packets and setting their `process_start_time` and `process_end_time`. Additionally, the `Router` class has three main functions:
 
-#### `accept_packet(packet)`
+- `accept_packet(packet)`: This function adds the incoming packet to the queue and assigns it to an idle processor if available.
 
-- This function adds the incoming packet to the queue and assigns it to an idle processor if available.
+-`empty_queue()`: When all packets have arrived, this function empties the queue by processing each packet in the order they were received. It continues processing until all packets are processed.
 
-#### `empty_queue()`
+-`pick_from_queue()`: This function checks for idle processors and waiting packets. If both are available, it pops a packet from the queue and starts processing it.
 
-- When all packets have arrived, this function empties the queue by processing each packet in the order they were received. It continues processing until all packets are processed.
-
-#### `pick_from_queue()`
-
-- This function checks for idle processors and waiting packets. If both are available, it pops a packet from the queue and starts processing it.
-- 
 ## Clone and Run
 
 To see the simulation results, follow these steps:
