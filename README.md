@@ -95,15 +95,15 @@ As mentioned earlier, the router has `PROCESSORS_NUM` processors. We've defined 
 
 #### `accept_packet(packet)`
 
-- Description: This function adds the incoming packet to the queue and assigns it to an idle processor if available.
+- This function adds the incoming packet to the queue and assigns it to an idle processor if available.
 
 #### `empty_queue()`
 
-- Description: When all packets have arrived, this function empties the queue by processing each packet in the order they were received. It continues processing until all packets are processed.
+- When all packets have arrived, this function empties the queue by processing each packet in the order they were received. It continues processing until all packets are processed.
 
 #### `pick_from_queue()`
 
-- Description: This function checks for idle processors and waiting packets. If both are available, it pops a packet from the queue and starts processing it.
+- This function checks for idle processors and waiting packets. If both are available, it pops a packet from the queue and starts processing it.
 
 
 
