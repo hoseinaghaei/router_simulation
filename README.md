@@ -89,27 +89,21 @@ The heart of the simulation lies in the `simulate` function, where we process pa
 
 The `_next_trigger` function plays a crucial role by selecting the trigger that is scheduled to occur next between arrival packets and departing ones, ensuring the simulation proceeds in chronological order.
 
-## Implementation Details
+### 4. `src/router.py`
 
-[Provide additional implementation details, insights, or code snippets that are essential for understanding and using your simulation script...]
+As mentioned earlier, the router has `PROCESSORS_NUM` processors. We've defined a `Processor` class for processing incoming packets and setting their `process_start_time` and `process_end_time`. Additionally, the `Router` class has three main functions:
 
-## Usage
+#### `accept_packet(packet)`
 
-[Explain how to use the simulator to run your router simulation with arrival and departure triggers...]
+- Description: This function adds the incoming packet to the queue and assigns it to an idle processor if available.
 
-## Contributing
+#### `empty_queue()`
 
-[If you have ideas for improving the simulator or wish to contribute to its development, describe how others can contribute. Follow the standard GitHub Fork and Pull Request workflow to get started...]
+- Description: When all packets have arrived, this function empties the queue by processing each packet in the order they were received. It continues processing until all packets are processed.
 
-## License
+#### `pick_from_queue()`
 
-[Include information about the project's licensing, such as the MIT License...]
-
-## Contact
-
-[If users have questions, suggestions, or need assistance with the simulator script or its components, provide contact information for the repository owner...]
-
-Thank you for your interest in the router simulation project and its innovative approach to handling packet arrival and departure triggers. We hope this simulation serves as a valuable tool for networking experimentation.
+- Description: This function checks for idle processors and waiting packets. If both are available, it pops a packet from the queue and starts processing it.
 
 
 
