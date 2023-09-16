@@ -104,15 +104,22 @@ As mentioned earlier, the router has `PROCESSORS_NUM` processors. We've defined 
 #### `pick_from_queue()`
 
 - This function checks for idle processors and waiting packets. If both are available, it pops a packet from the queue and starts processing it.
+- 
+### Clone and Run
 
+To see the simulation results, follow these steps:
 
+- `git clone https://github.com/hoseinaghaei/router_simulation.git`
+- `cd router_simulation`
+- `python main.py`
 
-1) برای افزایش بهره وری سیستم میتوان پردازنده جدید اضافه کرد و یا از زمانبندی های متنوع دیگر مانند class based queueing و ... استفاده کرد.
+This will run the router simulation with the default parameters and provide you with the following results:
 
-میتوان قدرت پردازنده ها را افزایش داد.
+- Average queue length.
+- Average time spent in all queues.
+- Average time spent in each of the three priority queues (High, Medium, Low).
+- Average utilization of each of the processors.
+- Total number of dropped packets.
+- Cumulative Distribution Function (CDF) plot of the time spent in all queues for packets with High Priority in all scenarios.
 
-2) اگر در ترافیک شبکه اولویت بسته ها مهم باشد که استفاده از راند روبین وزن دار بهتر است
-
-اگر در ترافیک شبکه دچار نوسانات بالا در طی زمان است استفاده از NPPS بهتر است 
-
-ولی ساده ترین حالت استفاده از FIFO است که در آن اولویت اهمیتی ندارد و ترافیک حدودا ثابت است
+You can modify the simulation parameters in the `main.py` file to customize the simulation as needed.
