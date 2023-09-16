@@ -63,31 +63,53 @@ Non-Preemptive Priority Scheduling is another queue type implemented in this sim
 
 - `pop_packet`: Non-Preemptive Priority Scheduling simply pops the last element from the queue.
 
-Each queue type (`FIFO`, `WRR`, and `NPPS`) has its own specific implementation of the `add_packet` and `pop_packet` functions, tailored to its respective behavior and policies.
+### 3. `src/simulator.py`
+
+In this file, we address the challenge of handling packet arrival and departure triggers efficiently within the simulation. Rather than using traditional methods like multi-threading or real-time clock handling, we've implemented a unique solution.
+
+#### Arrival and Departure Triggers
+
+In the `Simulator` class, we treat every Arrival or Departure event as a `TriggerObject`. This approach allows us to manage the simulation in a structured manner. Key properties within the `Simulator` class include:
+
+- `_router`: An instance of the `Router` object that we define later in the simulation.
+- `_packets`: A list of packets generated in the `PacketGenerator` class.
+- `_arrival_packet_triggers`: A list of `TriggerObject`s, each representing an arrival event. These triggers are created for each packet generated and are used to control packet routing.
+- `_leaving_packet_triggers`: When a packet finishes processing, a leaving trigger is generated. We use this list to assign a new packet to idle processors.
+- `_arrival_index`: Tracks which arrival packet is next in line for processing.
+- `_time`: Represents the simulated system's current time.
+
+#### Simulation Algorithm
+
+The heart of the simulation lies in the `simulate` function, where we process packets until they have all reached their destinations. The algorithm is as follows:
+
+1. Find the next trigger object to process.
+2. If no triggers are left, it indicates that we have processed all incoming packets, and we need to handle packets that are still in the queue using the `empty_queue` function from the `src/router.py` module.
+3. If the trigger is an arrival, we first move the simulated time to match the arrival time (if it's greater than our current time). Then, we call the `accept_packet` function of the `Router` class. If the router returns a packet that is currently being processed, we add it to the `_leaving_packet_triggers` list.
+4. If the trigger is a departure, we advance the `_time` to the `process_end_time` and instruct the router to select another packet from the queue using the `pick_from_queue` function.
+
+The `_next_trigger` function plays a crucial role by selecting the trigger that is scheduled to occur next between arrival packets and departing ones, ensuring the simulation proceeds in chronological order.
 
 ## Implementation Details
 
-Describe any important implementation details, additional features, or dependencies that are crucial for understanding and using your project.
+[Provide additional implementation details, insights, or code snippets that are essential for understanding and using your simulation script...]
 
 ## Usage
 
-To use the queue types in your router simulation, you can select the appropriate queue type in your simulation code and utilize the corresponding `add_packet` and `pop_packet` functions.
+[Explain how to use the simulator to run your router simulation with arrival and departure triggers...]
 
 ## Contributing
 
-Contributions to enhance or extend the functionality of the router simulation and its queue types are welcome. Feel free to make improvements or add new features. Follow the standard GitHub Fork and Pull Request workflow for contributions.
+[If you have ideas for improving the simulator or wish to contribute to its development, describe how others can contribute. Follow the standard GitHub Fork and Pull Request workflow to get started...]
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE). You are free to use, modify, and distribute the code as per the terms of this license.
+[Include information about the project's licensing, such as the MIT License...]
 
 ## Contact
 
-If you have any questions, need assistance, or have suggestions related to the router simulation or its queue types, please feel free to reach out to the repository owner:
+[If users have questions, suggestions, or need assistance with the simulator script or its components, provide contact information for the repository owner...]
 
-[Your Name](https://github.com/your-username)
-
-Thank you for your interest in the router simulation project, and we hope this
+Thank you for your interest in the router simulation project and its innovative approach to handling packet arrival and departure triggers. We hope this simulation serves as a valuable tool for networking experimentation.
 
 
 
